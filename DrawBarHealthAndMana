@@ -1,0 +1,47 @@
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        int health = 0, maxHealth = 100;
+        int mana = 0, maxMana = 100;
+
+        while (true)
+        {
+            DrawBar(health, maxHealth, 0, ConsoleColor.Green);
+            DrawBar(mana, maxMana, 1, ConsoleColor.Blue);
+
+            Console.SetCursorPosition(0, 3);
+            Console.Write("Введите количество жизней: ");
+            health = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Введите количество маны: ");
+            mana = Convert.ToInt32(Console.ReadLine());
+            Console.ReadKey();
+            Console.Clear();
+        }
+    }
+
+    private static void DrawBar(int value, int maxValue, int position, ConsoleColor color)
+    {
+        ConsoleColor defaultColor = Console.BackgroundColor;
+        string healthBar = "";
+
+        for (int i = 0; i < value; i++)
+        {
+            healthBar += " ";
+        }
+
+        Console.SetCursorPosition(0, position);
+        Console.Write("[");
+        Console.BackgroundColor = color;
+        Console.Write(healthBar);
+        Console.BackgroundColor = defaultColor;
+        healthBar = "";
+
+        for (int i = value; i < maxValue; i++)
+        {
+            healthBar += " ";
+        }
+
+        Console.Write(healthBar + "]");
+    }
+}
