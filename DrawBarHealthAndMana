@@ -2,13 +2,15 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        int health = 0, maxHealth = 100;
-        int mana = 0, maxMana = 100;
+        int health = 0;
+        int mana = 0;
 
-        while (true)
+        bool isWorkoing = true;
+
+        while (isWorkoing)
         {
-            DrawBar(health, maxHealth, 0, ConsoleColor.Green);
-            DrawBar(mana, maxMana, 1, ConsoleColor.Blue);
+            DrawBar(health);
+            DrawBar(mana);
 
             Console.SetCursorPosition(0, 3);
             Console.Write("Введите количество жизней: ");
@@ -20,28 +22,39 @@ internal class Program
         }
     }
 
-    private static void DrawBar(int value, int maxValue, int position, ConsoleColor color)
+    private static void DrawBar(int value)
+
     {
-        ConsoleColor defaultColor = Console.BackgroundColor;
-        string healthBar = "";
+        char startSymbol = '[';
+        char lastSymbol = ']';
+        char fillSymbol = '#';
+        char emptySymbol = '_';
+
+        int percent = 100;
+        int minValue = 0;
+        int maxValue = 100;
+        int scale;
+
+        if (value >= minValue && value <= maxValue)
+        {
+            scale = Convert.ToInt32(Convert.ToDouble(value) / percent * maxValue);
+            Console.WriteLine($"{startSymbol}{FillBar(scale, fillSymbol)}{FillBar(maxValue - scale, emptySymbol)}{lastSymbol}");
+        }
+        else
+        {
+            Console.WriteLine("Вы ввели не верный показатель здоровья.");
+        }
+    }
+
+    private static string FillBar(int value, char symbol)
+    {
+        string bar = " ";
 
         for (int i = 0; i < value; i++)
         {
-            healthBar += " ";
+            bar += symbol;
         }
 
-        Console.SetCursorPosition(0, position);
-        Console.Write("[");
-        Console.BackgroundColor = color;
-        Console.Write(healthBar);
-        Console.BackgroundColor = defaultColor;
-        healthBar = "";
-
-        for (int i = value; i < maxValue; i++)
-        {
-            healthBar += " ";
-        }
-
-        Console.Write(healthBar + "]");
-    }
+        return bar;
+    } 
 }
