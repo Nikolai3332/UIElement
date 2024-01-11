@@ -9,8 +9,10 @@ internal class Program
 
         while (isWorkoing)
         {
-            DrawBar(health);
-            DrawBar(mana);
+            Console.SetCursorPosition(0, 0);
+            DrawBar(health, ConsoleColor.Green);
+            Console.SetCursorPosition(0, 1);
+            DrawBar(mana, ConsoleColor.Blue);
 
             Console.SetCursorPosition(0, 3);
             Console.Write("Введите количество жизней: ");
@@ -22,13 +24,13 @@ internal class Program
         }
     }
 
-    private static void DrawBar(int value)
-
+    private static void DrawBar(int value, ConsoleColor color)
     {
+        ConsoleColor defaultColor = Console.BackgroundColor;
         char startSymbol = '[';
         char lastSymbol = ']';
-        char fillSymbol = '#';
-        char emptySymbol = '_';
+        char fillSymbol = ' ';
+        char emptySymbol = ' ';
 
         int percent = 100;
         int minValue = 0;
@@ -38,7 +40,11 @@ internal class Program
         if (value >= minValue && value <= maxValue)
         {
             scale = Convert.ToInt32(Convert.ToDouble(value) / percent * maxValue);
-            Console.WriteLine($"{startSymbol}{FillBar(scale, fillSymbol)}{FillBar(maxValue - scale, emptySymbol)}{lastSymbol}");
+            Console.Write($"{startSymbol}");
+            Console.BackgroundColor = color;
+            Console.Write($"{FillBar(scale, fillSymbol)}");
+            Console.BackgroundColor = defaultColor;
+            Console.Write($"{FillBar(maxValue - scale, emptySymbol)}{lastSymbol}"); 
         }
         else
         {
